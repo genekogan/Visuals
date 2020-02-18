@@ -2,85 +2,78 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
-//#include "Control.h"
 
 
 class Scene
 {
 public:
+    
     Scene() {
-//        ofAddListener(ofEvents().update, this, &Scene::update);
-//        control.setVisible(false);
         width = ofGetWidth();
         height = ofGetHeight();
         name = "Scene";
-        upsideDown = false;
-        active = false;
+        gui.clear();
         gui.setup("Scene");
+        gui.add(toClear.set("clear", false));
+        gui.add(upsideDown.set("upsideDown", false));
+        gui.add(bgColor.set("bgColor", ofColor::black));
+        setVisible(true);
     }
     
     virtual ~Scene() {
         ofRemoveListener(ofEvents().update, this, &Scene::update);
     }
-
-    string getName() {
-        return name;
-    }
     
     void setName(string name) {
         this->name = name;
         gui.setName(name);
-        bgColor.set(0, 0, 0, 255);
-//        control.setName(name);
-//        control.clear();
-//        control.addParameter("clear", &toClear);
-//        control.addColor("bgColor", &bgColor);
         toClear = false;
     }
         
-    virtual void initialize() { }
-
-    virtual void update() { }
-    
-    virtual void drawInner() { }
+    string getName() {
+        return name;
+    }
     
     void setup(int width, int height) {
         this->width = width;
         this->height = height;
-        active = true;
+        fbo.allocate(width, height, GL_RGBA);
         initialize();
     }
-    
-    void update(ofEventArgs &data) {
-        if (active) {
-            update();
-        }
+
+    virtual void initialize() {
+        
     }
-    
-    void draw(int x, int y) {
+
+    void update(ofEventArgs &data) {
+        update();
+    }
+
+    virtual void update() {
+        
+    }
+
+    void updateFBO() {
+        
+        fbo.begin();
+
+        if (toClear) {
+            ofClear(0, 0);
+            toClear = false;
+        }
+
         ofPushMatrix();
         ofPushStyle();
         
         ofEnableSmoothing();
         
-        ofTranslate(x, y);
-        
-        if (upsideDown) {
-            ofTranslate(width, height);
-            ofRotate(180);
-        }
-        
-        if (toClear) {
-            ofClear(0, 0);
-        }
-        
-        if (bgColor.a > 0) {
+        if (bgColor->a > 0) {
             ofFill();
             ofSetColor(bgColor);
             ofDrawRectangle(0, 0, width, height);
         }
 
-        ofSetColor(255, 255);
+        ofSetColor(ofColor::white);
 
         drawInner();     // call draw method of subclass
         
@@ -89,18 +82,43 @@ public:
         ofPopStyle();
         ofPopMatrix();
         
+        fbo.end();
+    }
+    
+    void draw(int x, int y) {
+        updateFBO();
+        
+        ofPushMatrix();
+        ofPushStyle();
+
+        ofTranslate(x, y);
+        
+        if (upsideDown) {
+            ofTranslate(width, height);
+            ofRotateDeg(180);
+        }
+
+        fbo.draw(0, 0);
+
+        ofPopStyle();
+        ofPopMatrix();
+
         if (guiVisible) {
             gui.draw();
         }
     }
-    
-    bool getActive() {
-        return active;
+
+    virtual void drawInner() {
+        
     }
 
-    virtual void setActive(bool active) {
-        this->active = active;
-//        control.setActive(active);
+    void setAutoUpdate(bool autoUpdate) {
+        this->autoUpdate = autoUpdate;
+        if (autoUpdate) {
+            ofAddListener(ofEvents().update, this, &Scene::update);
+        } else {
+            ofRemoveListener(ofEvents().update, this, &Scene::update);
+        }
     }
 
     void setGuiPosition(int x, int y) {
@@ -119,18 +137,24 @@ public:
         this->upsideDown = upsideDown;
     }
     
-//    Control & getControl() {
-//        return control;
-//    }
+    ofxPanel & getGui() {
+        return gui;
+    }
 
-//    Control control;
+protected:
+    
     ofxPanel gui;
     bool guiVisible;
+    
     string name;
-    int width, height;
-    ofColor bgColor;
-    bool toClear;
-    bool upsideDown;
-    bool active;
+    int width;
+    int height;
+    bool autoUpdate;
+    
+    ofParameter<ofColor> bgColor;
+    ofParameter<bool> toClear;
+    ofParameter<bool> upsideDown;
+    
+    ofFbo fbo;
 };
 
