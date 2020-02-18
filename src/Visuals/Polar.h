@@ -49,11 +49,9 @@ private:
     float angNoise, rateNoise, radNoise;
     ofVec3f noiseOffset, rotAngle;
     
-//    bool *is3d, *isRibbon;
     ofParameter<bool> is3d;
     ofParameter<ofVec3f> speedRotation;
     
-//    ofxTwistedRibbon ribbon;
     ofEasyCam cam;
 };
 
@@ -69,7 +67,7 @@ public:
     
 private:
     void managePolarCount();
-    void refresh(string &s);
+    void refresh();
     
     vector<PolarEq *> polars;
     

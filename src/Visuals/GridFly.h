@@ -1,13 +1,42 @@
-//
-//  GridFly.hpp
-//  Visuals
-//
-//  Created by Gene Kogan on 2/17/20.
-//
+#pragma once
 
-#ifndef GridFly_hpp
-#define GridFly_hpp
+#include "ofMain.h"
+#include "Scene.h"
 
-#include <stdio.h>
 
-#endif /* GridFly_hpp */
+class GridFly : public Scene
+{
+public:
+    ~GridFly();
+    void initialize();
+    void update();
+    void drawInner();
+    
+    
+private:
+    void addRow();
+    
+    ofMesh mesh;
+    ofEasyCam cam;
+    
+    vector<ofVec3f> *vertices;
+    float minY, dy, y, Z;
+    ofPoint camPosition = ofPoint(0, 100);
+    
+    ofParameter<int> nx;
+    ofParameter<int> ny;
+    ofParameter<ofVec2f> length;
+    ofParameter<float> margin;
+    ofParameter<ofVec2f> noiseFactor;
+    ofParameter<float> speed;
+    ofParameter<float> angle;
+    ofParameter<ofVec3f> axis;
+    ofParameter<ofColor> color;
+
+};
+
+
+/*
+ - random shapes floating around with random data
+ - 3d shapes / obj from thingiverse
+*/

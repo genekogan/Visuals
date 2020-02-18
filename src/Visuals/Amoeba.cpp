@@ -4,7 +4,7 @@
 void Amoeba::initialize() {
     setName("Amoeba");
     
-    gui.add(center.set("center", ofVec2f(width/2, height/2), ofVec2f(0, 0), ofVec2f(width, height)));
+    gui.add(center.set("center", ofVec2f(0.5, 0.5), ofVec2f(0, 0), ofVec2f(1, 1)));
     gui.add(numVertices.set("numVertices", 200, 3, 1000));
     gui.add(radRange.set("radRange", ofVec2f(0, width/3), ofVec2f(-width, -width), ofVec2f(width, width)));
     gui.add(speed.set("speed", 0.01, 0.0, 0.1));
@@ -58,10 +58,14 @@ void Amoeba::drawAmoeba() {
         ang = ofMap(i, 0, numVertices, 0, TWO_PI);
         rad0 = ofNoise(offset + noiseFactor * i, noiseRegion, time);
         rad = ofMap(rad0, 0, 1, radRange->x, radRange->y);
-        x = center->x + rad * cos(ang);
-        y = center->y + rad * sin(ang);
-        if (curvedVertices) ofCurveVertex(x, y);
-        else                ofVertex(x, y);
+        x = width * center->x + rad * cos(ang);
+        y = height * center->y + rad * sin(ang);
+        if (curvedVertices) {
+            ofCurveVertex(x, y);
+        }
+        else {
+            ofVertex(x, y);
+        }
     }
     ofEndShape(true);
 }

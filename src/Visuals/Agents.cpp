@@ -184,7 +184,7 @@ void Agent::draw() {
     ofSetColor(255);
     ofNoFill();
     ofDrawEllipse(0, 0, 2*rad, 2*rad);
-    ofRotate(ofRadToDeg(atan(vel.y / vel.x) + (vel.x < 0 ? PI : 0)), 0, 0, 1);
+    ofRotateRad(atan(vel.y / vel.x) + (vel.x < 0 ? PI : 0), 0, 0, 1);
     ofDrawLine(0, 0, rad, 0);
     ofPopMatrix();
 }

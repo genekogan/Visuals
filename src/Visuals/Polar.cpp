@@ -4,7 +4,6 @@
 PolarEq::PolarEq(ofParameter<bool> is3d, ofParameter<ofVec3f> speedRotation) {
     this->is3d = is3d;
     this->speedRotation = speedRotation;
-    //ribbon = new ofxTwistedRibbon();
     refresh();
 }
 
@@ -51,12 +50,6 @@ void PolarEq::update() {
     while (pts.size() > numPoints) {
         pts.erase(pts.begin());
     }
-//    if (*isRibbon) {
-//        ribbon.length = numPoints;
-//        ribbon.color = color;
-//        ribbon.thickness = lineWidth;
-//        ribbon.update(ofVec3f(x, y, z));
-//    }
 }
 
 //----------
@@ -65,21 +58,16 @@ void PolarEq::draw() {
     ofSetColor(color);
     ofSetLineWidth(lineWidth);
     
-    ofRotateX(rotAngle.x);
-    ofRotateX(rotAngle.y);
-    ofRotateZ(rotAngle.z);
+    ofRotateXDeg(rotAngle.x);
+    ofRotateYDeg(rotAngle.y);
+    ofRotateZDeg(rotAngle.z);
 
-//    if (*isRibbon) {
-//        ribbon.draw();
-//    }
-//    else {
-        ofNoFill();
-        ofBeginShape();
-        for (int i=0; i<pts.size(); i++) {
-            ofCurveVertex(pts[i].x, pts[i].y, pts[i].z);
-        }
-        ofEndShape();
-//    }
+    ofNoFill();
+    ofBeginShape();
+    for (int i=0; i<pts.size(); i++) {
+        ofCurveVertex(pts[i].x, pts[i].y, pts[i].z);
+    }
+    ofEndShape();
 }
 
 //----------
@@ -102,11 +90,6 @@ void Polar::initialize() {
     gui.add(is3d.set("3d", false));
     gui.add(speedRotation.set("speedRotation", ofVec3f(0.1, 0.1, 0.1), ofVec3f(0, 0, 0), ofVec3f(1, 1, 1)));
     
-//    control.addColor("color", &color);
-//    control.addParameter("ribbons", &isRibbon);
-//    control.addParameter("speedRotation", &speedRotation, ofVec3f(0, 0, 0), ofVec3f(1, 1, 1));
-//    control.addEvent("refresh", this, &Polar::refresh);
-    
     managePolarCount();
 }
 
@@ -116,13 +99,12 @@ void Polar::managePolarCount() {
         polars.erase(polars.begin());
     }
     while (polars.size() < nx * ny) {
-        //polars.push_back(new PolarEq(&is3d, &isRibbon, &speedRotation));
         polars.push_back(new PolarEq(is3d, speedRotation));
     }
 }
 
 //----------
-void Polar::refresh(string &s) {
+void Polar::refresh() {
     for (int i=0; i<polars.size(); i++) {
         polars[i]->refresh();
     }
@@ -173,5 +155,4 @@ Polar::~Polar(){
         delete polars[i];
     }
     polars.clear();
-    ofRemoveListener(ofEvents().update, (Scene*) this, &Scene::update);
 }

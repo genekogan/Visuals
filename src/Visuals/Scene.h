@@ -12,11 +12,18 @@ public:
         width = ofGetWidth();
         height = ofGetHeight();
         name = "Scene";
+
+        bSave.addListener(this, &Scene::eSaveSettings);
+        bLoad.addListener(this, &Scene::eLoadSettings);
+
         gui.clear();
         gui.setup("Scene");
+        gui.add(bSave.setup("save settings"));
+        gui.add(bLoad.setup("load settings"));
         gui.add(toClear.set("clear", false));
         gui.add(upsideDown.set("upsideDown", false));
         gui.add(bgColor.set("bgColor", ofColor::black));
+
         setVisible(true);
     }
     
@@ -140,6 +147,30 @@ public:
     ofxPanel & getGui() {
         return gui;
     }
+    
+    
+    
+    
+    
+    void loadSettings(string s) {
+        gui.loadFromFile("settings.xml");
+    }
+    void saveSettings(string s) {
+        gui.saveToFile("settings.xml");
+    }
+    
+    
+    void eLoadSettings() {
+        loadSettings("settings.xml");
+    }
+    void eSaveSettings() {
+        saveSettings("settings.xml");
+        
+    }
+
+    
+    
+    ofxButton bSave, bLoad;
 
 protected:
     
@@ -156,5 +187,9 @@ protected:
     ofParameter<bool> upsideDown;
     
     ofFbo fbo;
+    
+    
+    
+    
 };
 

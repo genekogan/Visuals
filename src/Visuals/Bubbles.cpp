@@ -18,15 +18,9 @@ void Bubbles::initialize() {
     gui.add(maxPasses.set("maxPasses", 30, 3, 50));
     gui.add(blurAmt.set("blurAmt", 7, 0, 20));
     
-    // NEEDS TO BE FIXED
-    
-    
-    /*
     maxPasses.addListener(this, &Bubbles::fboParametersChanged);
     blurAmt.addListener(this, &Bubbles::fboParametersChanged);
     maxSizeInitial.addListener(this, &Bubbles::fboParametersChanged);
-    */
-    
     
     setupBubblesFbo();
     time = 0;
@@ -39,7 +33,6 @@ Bubbles::~Bubbles() {
     for (int i=0; i<position.size(); i++) {
         delete position[i];
     }
-    ofRemoveListener(ofEvents().update, (Scene*) this, &Scene::update);
 }
 
 //------------
@@ -55,8 +48,7 @@ void Bubbles::setupBubblesFbo() {
     for (int passes=1; passes <= maxPasses; passes++) {
         ofFbo fbo;
         //fbo.allocate(blur.getWidth(), blur.getHeight(), GL_RGBA);
-        fbo.allocate(ofGetWidth(), ofGetHeight());
-
+        fbo.allocate(width, height);
         fbo.begin();
         ofClear(0, 0);
         ofSetColor(255);
