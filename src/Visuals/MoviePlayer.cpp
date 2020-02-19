@@ -15,7 +15,6 @@ void MoviePlayer::initialize() {
     
     idxLoad = 0;
     idxImgLoad = 0;
-    //loadMovie("/Users/Gene/media/sinuses.mov");
 
     setupControl();
 }
@@ -27,7 +26,9 @@ void MoviePlayer::setupControl() {
     bRandom.addListener(this, &MoviePlayer::jumpRandom);
     bLoad.addListener(this, &MoviePlayer::selectMedia);
     bNext.addListener(this, &MoviePlayer::triggerCallback);
-    
+
+    moviePath.setName("movie");
+
     gui.add(speed.set("speed", 1.0, -3.0, 3.0));
     gui.add(alpha.set("alpha", 255, 0.0, 255.0));
     
@@ -35,7 +36,8 @@ void MoviePlayer::setupControl() {
     gui.add(bRandom.setup("random"));
     gui.add(bLoad.setup("load"));
     gui.add(bNext.setup("next"));
-
+    gui.add(moviePath.set("(none)"));
+    
     bool clipsHidden = false;
     if (!clipsHidden) {
         vector<string> mPaths, iPaths;
@@ -48,6 +50,13 @@ void MoviePlayer::setupControl() {
 //        control.addMenu("movies", mPaths, this, &MoviePlayer::chooseMovie);
 //        control.addMenu("images", iPaths, this, &MoviePlayer::chooseImage);
     }
+    
+    moviePath.addListener(this, &MoviePlayer::eMovieNameChanged);
+}
+
+//--------
+void MoviePlayer::eMovieNameChanged(string & p) {
+    loadMovie(moviePath);
 }
 
 //--------
@@ -60,13 +69,15 @@ void MoviePlayer::selectMedia() {
             loadImage(file.filePath);
         }
         else if (extension == "mov" || extension == "mp4"){
-            loadMovie(file.filePath);
+            //loadMovie(file.filePath);
+            moviePath.set(file.filePath);
         }
     }
 }
 
 //--------
 void MoviePlayer::loadMovie(string path) {
+
     mode = MOVIE;
     playing = true;
     
@@ -105,7 +116,6 @@ void MoviePlayer::loadMovie(string path) {
     
     idxLoad++;
     moviePaths.push_back(path);
-    
 }
 
 //--------
@@ -134,13 +144,12 @@ void MoviePlayer::loadImage(string path) {
 
 //--------
 void MoviePlayer::jumpBack() {
-    player[active].setFrame(player[active].getCurrentFrame()-15);
+    player[active].setFrame(player[active].getCurrentFrame()-25);
 }
 
 //--------
 void MoviePlayer::jumpRandom() {
-    //player[active].setFrame(ofRandom(player[active].getTotalNumFrames()));
-    player[active].setFrame((int)(0.034*(float)player[active].getTotalNumFrames()));
+    player[active].setFrame(ofRandom(player[active].getTotalNumFrames()));
 }
 
 //--------
@@ -157,6 +166,11 @@ void MoviePlayer::update() {
 
 //--------
 void MoviePlayer::drawInner() {
+    
+    if (!(mode == MOVIE && player[active].isLoaded()) && !(mode == IMAGE && img[active].isAllocated())) {
+        return;
+    }
+    
     ofSetColor(ofColor::white, alpha);
     
     if (mode == IMAGE) {

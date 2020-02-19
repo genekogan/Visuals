@@ -18,6 +18,9 @@
 #include "Subdivide.h"
 
 
+#include "Visual.h"
+
+
 class ofApp : public ofBaseApp{
 
 public:
@@ -53,4 +56,6 @@ protected:
     Shader shade;
     ShapeSpace shapespace;
     Subdivide subdivide;
+    
+    Visual visual;
 };

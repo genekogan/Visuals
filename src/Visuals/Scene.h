@@ -28,7 +28,7 @@ public:
     }
     
     virtual ~Scene() {
-        ofRemoveListener(ofEvents().update, this, &Scene::update);
+        setAutoUpdate(false);
     }
     
     void setName(string name) {
@@ -61,7 +61,6 @@ public:
     }
 
     void updateFBO() {
-        
         fbo.begin();
 
         if (toClear) {
@@ -147,36 +146,66 @@ public:
     ofxPanel & getGui() {
         return gui;
     }
-    
-    
-    
-    
-    
-    void loadSettings(string s) {
-        gui.loadFromFile("settings.xml");
-    }
-    void saveSettings(string s) {
-        gui.saveToFile("settings.xml");
-    }
-    
-    
-    void eLoadSettings() {
-        loadSettings("settings.xml");
-    }
-    void eSaveSettings() {
-        saveSettings("settings.xml");
-        
+
+    void loadSettings(string path) {
+        gui.loadFromFile(path);
     }
 
+    void loadPreset(string presetName) {
+        string presetDir = "presets/"+name;
+        string path = presetDir+"/"+presetName+".xml";
+        loadSettings(path);
+    }
+
+    void eLoadSettings() {
+        ofFileDialogResult file = ofSystemLoadDialog();
+        if (file.bSuccess) {
+            vector<string> fileSplit = ofSplitString(file.filePath, ".");
+            string extension = ofToLower(fileSplit[fileSplit.size()-1]);
+            if (extension == "xml") {
+                loadSettings(file.filePath);
+            }
+            else {
+                ofLog(OF_LOG_ERROR, "file is not an xml file");
+            }
+        }
+    }
     
+    void saveSettings(string path) {
+        gui.saveToFile(path);
+    }
     
-    ofxButton bSave, bLoad;
+    void savePreset(string presetName) {
+        string presetDir = "presets/"+name;
+        string path = presetDir+"/"+presetName+".xml";
+        saveSettings(path);
+    }
+
+    void eSaveSettings() {
+        ofDirectory dir;
+
+        string presetDir = "presets/"+name;
+        string presetName = ofSystemTextBoxDialog("What is the name of this preset?");
+        string path = presetDir+"/"+presetName+".xml";
+        
+        dir.open("presets");
+        if(!dir.exists()){
+            dir.createDirectory("presets");
+        }
+        dir.open(presetDir);
+        if(!dir.exists()){
+            dir.createDirectory(presetDir);
+        }
+        
+        saveSettings(path);
+    }
 
 protected:
     
     ofxPanel gui;
     bool guiVisible;
-    
+    ofxButton bSave, bLoad;
+
     string name;
     int width;
     int height;
@@ -187,9 +216,5 @@ protected:
     ofParameter<bool> upsideDown;
     
     ofFbo fbo;
-    
-    
-    
-    
 };
 

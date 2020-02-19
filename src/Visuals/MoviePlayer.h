@@ -58,6 +58,12 @@ private:
     ofxButton bRandom;
     ofxButton bLoad;
     ofxButton bNext;
+    
+    
+    
+    
+    void eMovieNameChanged(string & path);
+    ofParameter<string> moviePath;
 };
 
 
