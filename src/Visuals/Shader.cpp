@@ -1,19 +1,25 @@
 #include "Shader.h"
 
+//--------
+void Shader::ePresetChanged(string & p) {
+    setShaderPreset(shaderPresetName);
+}
 
 //--------
 void Shader::initialize() {
     setName("Shader");
-    width = 1280;
-    height = 800;
+    shaderPresetName.setName("preset");
+    gui.add(shaderPresetName.set("(none)"));
+    shaderPresetName.addListener(this, &Shader::ePresetChanged);
 }
 
 //--------
 void Shader::setShader(string vert, string frag) {
+    //clearParameters();
     vector<string> fragName = ofSplitString(frag, "/");
     shader.load(vert, frag);
-    Scene::setup(width, height);
-    setName(fragName[fragName.size()-1]);
+    //Scene::setup(width, height);
+    //setName(fragName[fragName.size()-1]);
 }
 
 //--------
@@ -44,12 +50,14 @@ void Shader::drawInner() {
         fboTex->draw(0, 0, width, height);
     }
     else {
-        glBegin(GL_QUADS);
-        glTexCoord2f(0, 0);                     glVertex3f(0, 0, 0);
-        glTexCoord2f(width, 0);                 glVertex3f(width, 0, 0);
-        glTexCoord2f(width, height);            glVertex3f(width, height, 0);
-        glTexCoord2f(0, height);                glVertex3f(0, height, 0);
-        glEnd();
+//        glBegin(GL_QUADS);
+//        glTexCoord2f(0, 0);                     glVertex3f(0, 0, 0);
+//        glTexCoord2f(width, 0);                 glVertex3f(width, 0, 0);
+//        glTexCoord2f(width, height);            glVertex3f(width, height, 0);
+//        glTexCoord2f(0, height);                glVertex3f(0, height, 0);
+//        glEnd();
+        ofSetColor(ofColor::white);
+        ofDrawRectangle(0, 0, width, height);
     }
     
     shader.end();
@@ -57,30 +65,33 @@ void Shader::drawInner() {
 
 //--------
 void Shader::addParameter(string name, float min, float max){
-    float *var = new float();
-    //control.addParameter(name, var, min, max);
-    *var = (min+max)*0.5;
+    ofParameter<float> *var = new ofParameter<float>();
+    var->set(name, (min + max) * 0.5, min, max);
+    gui.add(*var);
     shaderParameters.push_back(new ShaderParameter<float>(name, var));
 }
 
 //--------
 void Shader::addParameter(string name, ofVec2f min, ofVec2f max) {
-    ofVec2f *var = new ofVec2f((min+max)*0.5);
-    //control.addParameter(name, var, min, max);
+    ofParameter<ofVec2f> *var = new ofParameter<ofVec2f>();
+    var->set(name, (min + max) * 0.5, min, max);
+    gui.add(*var);
     shaderParameters.push_back(new ShaderParameter<ofVec2f>(name, var));
 }
 
 //--------
 void Shader::addParameter(string name, ofVec3f min, ofVec3f max){
-    ofVec3f *var = new ofVec3f((min+max)*0.5);
-    //control.addParameter(name, var, min, max);
+    ofParameter<ofVec3f> *var = new ofParameter<ofVec3f>();
+    var->set(name, (min + max) * 0.5, min, max);
+    gui.add(*var);
     shaderParameters.push_back(new ShaderParameter<ofVec3f>(name, var));
 }
 
 //--------
 void Shader::addParameter(string name, ofColor min, ofColor max){
-    ofColor *var = new ofColor((min+max)*0.5);
-    //control.addColor(name, var);
+    ofParameter<ofColor> *var = new ofParameter<ofColor>();
+    var->set(name, (min + max) * 0.5);
+    gui.add(*var);
     shaderParameters.push_back(new ShaderParameter<ofColor>(name, var));
 }
 
@@ -297,4 +308,43 @@ void Shader::setupWrap(){
 	addParameter("radTwist", 0, 10);
     addParameter("angShift", 0, TWO_PI);
     addParameter("mode", 0, 1);
+}
+
+void Shader::setShaderPreset(string preset) {
+    if      (preset == "blobby") setupBlobby();
+    else if (preset == "bits") setupBits();
+    else if (preset == "bitsexperimental") setupBitsExperimental();
+    else if (preset == "electro") setupElectro();
+    else if (preset == "eye") setupEye();
+    else if (preset == "herokububbles") setupHerokuBubbles();
+    else if (preset == "landscape") setupLandscape();
+    else if (preset == "monjori") setupMonjori();
+    else if (preset == "nebula") setupNebula();
+    else if (preset == "noisy") setupNoisy();
+    else if (preset == "ikeda") setupIkeda();
+    else if (preset == "rain") setupRain();
+    else if (preset == "sinewave") setupSinewave();
+    else if (preset == "sinewaveexperimental") setupSinewaveExperimental();
+    else if (preset == "wave") setupWave();
+    else if (preset == "fractalscope") setupFractalScope();
+    else if (preset == "fractalflower") setupFractalFlower();
+    else if (preset == "curtains") setupCurtains();
+
+    else if (preset == "brcosa") setupBrCoSa();
+    else if (preset == "pixelate") setupPixelate();
+    else if (preset == "bilateral") setupBilateralFilter();
+    else if (preset == "blur") setupBlur();
+    else if (preset == "channels") setupChannels();
+    else if (preset == "deform") setupDeform();
+    else if (preset == "edges") setupEdges();
+    else if (preset == "halftonecmyk") setupHalftoneCmyk();
+    else if (preset == "halftone") setupHalftone();
+    else if (preset == "hue") setupHue();
+    else if (preset == "invert") setupInvert();
+    else if (preset == "neon") setupNeon();
+    else if (preset == "patches") setupPatches();
+    else if (preset == "pixelrolls") setupPixelRolls();
+    else if (preset == "grayscale") setupGrayscale();
+    else if (preset == "threshold") setupThreshold();
+    else if (preset == "wrap") setupWrap();
 }

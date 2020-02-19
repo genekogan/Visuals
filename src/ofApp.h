@@ -16,8 +16,6 @@
 #include "Shader.h"
 #include "ShapeSpace.h"
 #include "Subdivide.h"
-
-
 #include "Visual.h"
 
 
@@ -42,20 +40,21 @@ public:
     
 protected:
     
-    Agents agents;
-    Amoeba amoeba;
-    Bubbles bubbles;
-    Cubes cubes;
-    DebugScreen debugscreen;
-    GridFly gridfly;
-    Letters letters;
-    Meshy meshy;
-    MoviePlayer movieplayer;
-    Polar polar;
-    Rivers rivers;    
-    Shader shade;
-    ShapeSpace shapespace;
-    Subdivide subdivide;
+//    Agents agents;
+//    Amoeba amoeba;
+//    Bubbles bubbles;
+//    Cubes cubes;
+//    DebugScreen debugscreen;
+//    GridFly gridfly;
+//    Letters letters;
+//    Meshy meshy;
+//    MoviePlayer movieplayer;
+//    Polar polar;
+//    Rivers rivers;
+//    Shader shade;
+//    ShapeSpace shapespace;
+//    Subdivide subdivide;
     
     Visual visual;
+    
 };

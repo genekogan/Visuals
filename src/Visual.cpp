@@ -37,7 +37,9 @@ void Visual::setup(string sceneType, string presetName, int w, int h) {
         scene = new Subdivide();
     }
     scene->setup(w, h);
-    scene->loadPreset(presetName);
+    if (presetName != ""){
+        scene->loadPreset(presetName);
+    }
 }
 
 //------------------------------------------------------------------

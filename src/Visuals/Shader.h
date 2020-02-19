@@ -10,12 +10,12 @@ struct ShaderParameterBase {
 
 template<typename T>
 struct ShaderParameter : public ShaderParameterBase {
-    ShaderParameter(string name, T *value) {
+    ShaderParameter(string name, ofParameter<T> *value) {
         this->name = name;
         this->value = value;
     }
     void update(ofShader *shader);
-    T *value;
+    ofParameter<T> *value;
     string name;
 };
 
@@ -29,15 +29,15 @@ void ShaderParameter<float>::update(ofShader *shader) {
 }
 template<> inline
 void ShaderParameter<ofVec2f>::update(ofShader *shader) {
-    shader->setUniform2f(name, value->x, value->y);
+    shader->setUniform2f(name, (*value)->x, (*value)->y);
 }
 template<> inline
 void ShaderParameter<ofVec3f>::update(ofShader *shader) {
-    shader->setUniform3f(name, value->x, value->y, value->z);
+    shader->setUniform3f(name, (*value)->x, (*value)->y, (*value)->z);
 }
 template<> inline
 void ShaderParameter<ofColor>::update(ofShader *shader) {
-    shader->setUniform3f(name, value->r / 255.0, value->g / 255.0, value->b / 255.0);
+    shader->setUniform3f(name, (*value)->r / 255.0, (*value)->g / 255.0, (*value)->b / 255.0);
 }
 
 
@@ -96,11 +96,15 @@ public:
     void setupThreshold();
     void setupWrap();
     
+    void setShaderPreset(string preset);
+    void ePresetChanged(string & p);
+    
 private:
     
     vector<ShaderParameterBase *> shaderParameters;
     ofShader shader;
     ofFbo *fboTex;
     bool hasTexture;
+    ofParameter<string> shaderPresetName;
 
 };

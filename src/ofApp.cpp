@@ -4,8 +4,9 @@
 void ofApp::setup(){
     ofSetFullscreen(true);
   
-    visual.setupFromJson("startup.json", ofGetWidth(), ofGetHeight());
-
+    //visual.setupFromJson("shader", ofGetWidth(), ofGetHeight());
+    visual.setup("shader", "cool", ofGetWidth(), ofGetHeight());
+    
 
 //    movieplayer.loadMovie("/Users/gene/bin/lapnorm/nips/NIPS_GeneKogan_new.mp4");
 
