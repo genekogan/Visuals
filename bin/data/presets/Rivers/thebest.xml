@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Rivers>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 0, 204</bgColor>
+	<numStreaks>8100</numStreaks>
+	<complexity>0.01189</complexity>
+	<baseSpeed>0.3</baseSpeed>
+	<speedVar>0.715</speedVar>
+	<minAge>612</minAge>
+	<maxAge>820</maxAge>
+	<refreshAlpha>17</refreshAlpha>
+	<streakAlpha>253</streakAlpha>
+	<maxThickness>7.1005</maxThickness>
+	<color>255, 196, 69, 255</color>
+	<colorVar>71</colorVar>
+</Rivers>

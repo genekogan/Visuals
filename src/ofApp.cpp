@@ -2,14 +2,29 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFullscreen(true);
-  
-    //visual.setupFromJson("shader", ofGetWidth(), ofGetHeight());
-    visual.setup("shader", "cool", ofGetWidth(), ofGetHeight());
     
+    //visual.setupFromJson("shader", ofGetWidth(), ofGetHeight());
+    //visual.setupFromJson("startup", ofGetWidth(), ofGetHeight());
 
-//    movieplayer.loadMovie("/Users/gene/bin/lapnorm/nips/NIPS_GeneKogan_new.mp4");
 
+    string presetName = ofGetEnv("PRESET");
+ 
+    string tx = ofGetEnv("X");
+    string ty = ofGetEnv("Y");
+    
+    if (tx != "" && ty != "") {
+        cout << "translate " << tx << " " << ty << endl;
+        ofSetWindowPosition(ofToInt(tx), ofToInt(ty));
+    }
+    ofSetFullscreen(true);
+
+    if (presetName != "") {
+         visual.setupFromJson(presetName, ofGetWidth(), ofGetHeight());
+    }
+    visual.getScene()->setVisible(false);
+    
+    //visual.setupShader("blobby", "blobbylikes", ofGetWidth(), ofGetHeight());
+    //visual.setupShader("blobby", "blobbylikes", ofGetWidth(), ofGetHeight());
 }
 
 //--------------------------------------------------------------
@@ -24,7 +39,10 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key == ' '){
+        cout << "go " << endl;
+        //visual.scene->getGui().loadFromFile("/Users/gene/Code/of_v0.11.0_osx_release/apps/myApps/Visuals/bin/data/presets/Scene/hello.xml");
+    }
 }
 
 //--------------------------------------------------------------

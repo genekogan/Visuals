@@ -148,6 +148,7 @@ public:
     }
 
     void loadSettings(string path) {
+        cout << "LOAD FROM " << path << endl;
         gui.loadFromFile(path);
     }
 

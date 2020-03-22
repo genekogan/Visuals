@@ -27,9 +27,12 @@ public:
     Visual();
 
     void setup(string sceneType, string presetName, int w, int h);
+    void setupShader(string shaderType, string presetName, int w, int h);
     void setupFromJson(string jsonPath, int w, int h);
     void update();
     void draw(int x, int y);
+    
+    Scene * getScene() {return scene;}
     
 protected:
     

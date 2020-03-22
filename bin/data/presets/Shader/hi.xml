@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Shader>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 0, 255</bgColor>
+	<preset>(none)</preset>
+	<depth>1</depth>
+	<rate>0.23</rate>
+	<speed>0.22</speed>
+	<density>20</density>
+	<zoomout>12</zoomout>
+</Shader>

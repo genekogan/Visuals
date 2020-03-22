@@ -29,8 +29,8 @@ void Visual::setup(string sceneType, string presetName, int w, int h) {
         scene = new Polar();
     } else if (sceneType == "rivers") {
         scene = new Rivers();
-    } else if (sceneType == "shader") {
-        scene = new Shader();
+    //} else if (sceneType == "shader") {
+    //    scene = new Shader();
     } else if (sceneType == "shapespace") {
         scene = new ShapeSpace();
     } else if (sceneType == "subdivide") {
@@ -43,11 +43,37 @@ void Visual::setup(string sceneType, string presetName, int w, int h) {
 }
 
 //------------------------------------------------------------------
+void Visual::setupShader(string shaderType, string presetName, int w, int h) {
+    scene = new Shader();
+    scene->setName("Shader");
+    ((Shader *) scene)->setShaderPreset(shaderType);
+    if (presetName != "") {
+        ((Shader *) scene)->loadPreset(presetName);
+    }
+}
+
+//------------------------------------------------------------------
 void Visual::setupFromJson(string jsonPath, int w, int h) {
     ofJson json = ofLoadJson(jsonPath);
-    string sceneName = json["scene"];
-    string presetName = json["preset"];
-    setup(sceneName, presetName, w, h);
+    string sceneName;
+    string presetName;
+    string shaderType;
+    if (json.contains("scene")) {
+        sceneName = json["scene"];
+    }
+    if (json.contains("preset")) {
+        presetName = json["preset"];
+    }
+    if (json.contains("shaderType")) {
+        shaderType = json["shaderType"];
+    }
+    if (sceneName == "shader") {
+        setupShader(shaderType, presetName, w, h);
+    }
+    else {
+        setup(sceneName, presetName, w, h);
+    }
+    
 }
 
 //------------------------------------------------------------------

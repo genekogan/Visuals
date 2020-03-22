@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Subdivide>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 0, 255</bgColor>
+	<circleResolution>10</circleResolution>
+	<lerp>0</lerp>
+	<color>100, 255, 120, 255</color>
+	<varColor>20, 20, 20, 255</varColor>
+</Subdivide>

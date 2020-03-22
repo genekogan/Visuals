@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Amoeba>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 113, 6</bgColor>
+	<center>0.571429, 0.653061</center>
+	<numVertices>735</numVertices>
+	<radRange>-808.163, 1440</radRange>
+	<speed>0.01</speed>
+	<noiseFactor>0.087</noiseFactor>
+	<noiseRegion>-4.85</noiseRegion>
+	<offset>0</offset>
+	<colorFill>75, 255, 61, 140</colorFill>
+	<colorStroke>255, 66, 19, 244</colorStroke>
+	<lineWidth>1</lineWidth>
+	<filled>1</filled>
+	<filledCycle>116</filledCycle>
+	<filledDensity>1</filledDensity>
+	<stroked>1</stroked>
+	<strokedCycle>126</strokedCycle>
+	<strokedDensity>0.955</strokedDensity>
+	<curvedVertices>0</curvedVertices>
+</Amoeba>

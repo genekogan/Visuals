@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<MoviePlayer>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 0, 255</bgColor>
+	<speed>1</speed>
+	<alpha>255</alpha>
+	<movie>movies/movie.mp4</movie>
+</MoviePlayer>

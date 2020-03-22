@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Scene>
+	<clear>0</clear>
+	<upsideDown>0</upsideDown>
+	<bgColor>0, 0, 0, 255</bgColor>
+	<colorMult>2.08418, 0.668367</colorMult>
+	<coeff>12.8571, 81.2755, 79.1786</coeff>
+</Scene>
