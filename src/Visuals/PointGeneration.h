@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxDelaunay.h"
+//#include "ofxDelaunay.h"
 
-
+/*
 //------------
 class PointGenerator
 {
@@ -55,3 +55,4 @@ private:
     vector<XYZI>        vertices;
 };
 
+*/

@@ -8,6 +8,7 @@
 class Meshy : public Scene
 {
 public:
+    /*
     void initialize();
     void update();
     void drawInner();
@@ -36,6 +37,7 @@ private:
     ofParameter<ofColor> color;
     ofParameter<ofColor> varColor;
     ofParameter<float> lineWidth;
+     */
 };
 
 

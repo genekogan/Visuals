@@ -1,6 +1,6 @@
 #include "Meshy.h"
 
-
+/*
 //--------
 void Meshy::initialize() {
     setName("Meshy");
@@ -97,3 +97,4 @@ void Meshy::drawInner() {
     }
 }
 
+*/

@@ -1,6 +1,6 @@
 #include "PointGeneration.h"
 
-
+/*
 //-------
 void PointGenerator::setBounds(float x, float y, float w, float h) {
     bounds.push_back(ofPoint(x, y));
@@ -123,3 +123,4 @@ void Triangulator::triangulate(vector<ofPoint> &points) {
     triangles = triangulation.getTriangles();
     vertices = triangulation.getVertices();
 }
+*/
